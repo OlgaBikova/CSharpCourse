@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Employee page</title>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    </head>
+    <body>
+        <div>
+            <h2>Employee List</h2>
+            <ul id="employeeList"></ul>
+        </div>
+
+        <div>
+            <h2>Search Employee By Id</h2>
+            <input type="text" id="employeeId"/>
+            <input type="button" value="Search" onclick="find();" />
+        </div>
+
+        <script>
+            var url = "api/Employee";
+
+            $(document).ready(function () {
+                $.getJSON(url).done(function (data) {
+                    $.each(data, function (key, item) {
+                        $('<li>', { text: formatEmployeeName(item) }).appendTo($("#employeeList"));
+                    });
+                });
+            });
+
+            function formatEmployeeName(item)
+            {
+                return item.Name + " " + item.Surname;
+            }
+
+            function find()
+            {
+                var idValue = $("#employeeId").val();
+                var fullUrl = url + "/" + idValue;
+
+                $.getJSON(fullUrl)
+                    .done(function (data) {
+                        $("#employeeList").text(formatEmployeeName(data[0]))
+                    })
+                    .fail(function (jqXHR, textStatus, err) {
+                        $("#employeeList").text('Error: ' + err);
+                    });
+
+            }
+   
+        </script>
+
+    </body>
+</html>
