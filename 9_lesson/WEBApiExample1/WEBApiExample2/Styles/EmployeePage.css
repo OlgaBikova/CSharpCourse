@@ -1,0 +1,11 @@
+﻿.firstRow {
+    display: inline-block;
+}
+.firstRow > div {
+    float: left;
+    margin-right: 50px;
+}
+
+#EmployeeEditBlock {
+    display: none;
+}
